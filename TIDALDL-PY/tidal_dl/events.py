@@ -130,9 +130,13 @@ def start_by_search(string):
 
     item = SearchResult()
     try:
-        item = TIDAL_API.search("Behemoth", Type.Null, 0, 1)
-        Printf.info("Found matching id: "+str(item.artists.items[0].id))
-        start(str(item.artists.items[0].id))
+        item = TIDAL_API.search(string, Type.Null, 0, 1)
+        Printf.info("Found matching artist: ")
+        Printf.info(str(item.artists.items[0].id))
+        Printf.info(str(item.artists.items[0].name))
+        Printf.info(str(item.artists.items[0].type))
+        Printf.info(str(item.artists.items[0].picture))
+        start("https://listen.tidal.com/artist/"+str(item.artists.items[0].id))
     except Exception as e:
         Printf.err(str(e))
         Printf.err(item.artists)

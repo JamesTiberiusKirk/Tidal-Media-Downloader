@@ -65,7 +65,8 @@ class Printf(object):
             ["-o or --output",      "download path"],
             ["-l or --link",        "url/id/filePath"],
             ["-q or --quality",     "track quality('Normal','High,'HiFi','Master')"],
-            ["-r or --resolution",  "video resolution('P1080', 'P720', 'P480', 'P360')"]
+            ["-r or --resolution",  "video resolution('P1080', 'P720', 'P480', 'P360')"],
+            ["-s or --search",      "search_query"]
         ])
         print(tb)
         

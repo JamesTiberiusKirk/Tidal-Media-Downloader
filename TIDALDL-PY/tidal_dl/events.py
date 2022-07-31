@@ -123,6 +123,21 @@ def start(string):
             Printf.err(str(e))
 
 
+def start_by_search(string):
+    if aigpy.string.isNull(string):
+        Printf.err('Please enter something.')
+        return
+
+    item = SearchResult()
+    try:
+        item = TIDAL_API.search("Behemoth", Type.Null, 0, 1)
+        Printf.info("Found matching id: "+str(item.artists.items[0].id))
+        start(str(item.artists.items[0].id))
+    except Exception as e:
+        Printf.err(str(e))
+        Printf.err(item.artists)
+        return
+
 '''
 =================================
 CHANGE SETTINGS

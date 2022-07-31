@@ -19,13 +19,14 @@ from tidal_dl.gui import startGui
 def mainCommand():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 
-                                   "hvgl:o:q:r:", 
-                                   ["help", "version", "gui", "link=", "output=", "quality", "resolution"])
+                                    "hvgl:o:q:r:s:", 
+                                   ["help", "version", "gui", "link=", "output=", "quality", "resolution", "search"])
     except getopt.GetoptError as errmsg:
         Printf.err(vars(errmsg)['msg'] + ". Use 'tidal-dl -h' for useage.")
         return
 
     link = None
+    search = None
     showGui = False
     for opt, val in opts:
         if opt in ('-h', '--help'):
@@ -52,6 +53,10 @@ def mainCommand():
             SETTINGS.videoQuality = SETTINGS.getVideoQuality(val)
             SETTINGS.save()
             continue
+        if opt in ('-s', '--search'):
+            search = val
+            Printf.info("search: "+search)
+            continue
     
     if not aigpy.path.mkdirs(SETTINGS.downloadPath):
         Printf.err(LANG.select.MSG_PATH_ERR + SETTINGS.downloadPath)
@@ -66,6 +71,12 @@ def mainCommand():
             loginByWeb()
         Printf.info(LANG.select.SETTING_DOWNLOAD_PATH + ':' + SETTINGS.downloadPath)
         start(link)
+
+    if search is not None:
+        if not loginByConfig():
+            loginByWeb()
+        Printf.info(LANG.select.SETTING_DOWNLOAD_PATH + ':' + SETTINGS.downloadPath)
+        start_by_search(search)
 
 def main():
     SETTINGS.read(getProfilePath())
